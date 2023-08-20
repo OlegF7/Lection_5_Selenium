@@ -2,12 +2,16 @@ package ru.academits.com;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.awt.*;
 import java.time.Duration;
 
 import org.openqa.selenium.*;
@@ -32,16 +36,30 @@ public class Demoqa {
             driver = new FirefoxDriver();
         }
 
-        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
         String url = "https://demoqa.com/automation-practice-form/";
-        Dimension dimension = new Dimension(1280, 720);
+//        Dimension dimension = new Dimension(1280, 720);
+//        driver.manage().window().setSize(dimension);
+
         assert driver != null;
-        driver.manage().window().setSize(dimension);
-//      driver.manage().window().fullscreen();
         driver.get(url);
+
+        driver.manage().window().fullscreen();
+
+//        ChromeOptions options = new ChromeOptions();
+//        options.addArguments("--start-maximized");
+//        driver = new ChromeDriver( options );
+
         JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.body.style.zoom='50%'");
+
+//        Toolkit toolkit = Toolkit.getDefaultToolkit();
+//        Dimension screenResolution = new Dimension((int)
+//                toolkit.getScreenSize().getWidth(), (int)
+//                toolkit.getScreenSize().getHeight());
+//        driver.manage().window().setSize(screenResolution);
+        //js.executeScript("document.body.style.zoom='50%'");
+
         System.out.println("Start");
 
         System.out.println("Name, email");
@@ -55,7 +73,7 @@ public class Demoqa {
         System.out.println("Gender");
 //        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 //        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='genterWrapper']/div[2]/div[1]/label"))).click();
-      driver.findElement(By.xpath("//*[@id='genterWrapper']/div[2]/div[1]/label")).click();
+        driver.findElement(By.xpath("//*[@id='genterWrapper']/div[2]/div[1]/label")).click();
 
         System.out.println("Mobile Number");
         driver.findElement(By.id("userNumber")).clear();
@@ -99,14 +117,18 @@ public class Demoqa {
         Thread.sleep(1000);
 
         System.out.println("Скроллим вниз");
-//        js.executeScript("document.body.style.zoom='50%'");
-        //element = driver.findElement(By.id("submit"));
-        element = driver.findElement(By.xpath("//*[@id='app']/footer/span"));
-        js.executeScript("arguments[0].scrollIntoView(true);", element);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='submit']"))).click();
-        //driver.findElement(By.id("submit")).click();
-        //driver.findElement(By.id("closeLargeModal")).click();
+        js.executeScript("document.body.style.zoom='50%'");
+        driver.findElement(By.xpath("//*[@id='submit']"));
+        js.executeScript("arguments[0].click();", element);
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='submit']"))).click();
+//        element = driver.findElement(By.id("submit"));
+//        element = driver.findElement(By.xpath("//*[@id='app']/footer/span"));
+//        js.executeScript("arguments[0].scrollIntoView(true);", element);
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='submit']"))).click();
+//        driver.findElement(By.id("submit")).click();
+//        driver.findElement(By.id("closeLargeModal")).click();
     }
 }
 

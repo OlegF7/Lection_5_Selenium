@@ -1,6 +1,8 @@
-package ru.academits.com;
+package ru.academits;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +19,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import java.awt.*;
 import java.io.File;
 import java.time.Duration;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -28,8 +32,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class Demoqa {
     public static WebDriver driver = null;
 
-    @BeforeEach
-    public void beforetest(){
+    @Before
+    public void beforetest()  {
+
         String browser = System.getProperty("browser");
 
         if (browser.equals("chrome")) {
@@ -43,14 +48,18 @@ public class Demoqa {
             driver = new FirefoxDriver();
         }
         String url = "https://demoqa.com/automation-practice-form/";
-        assert driver != null;
         driver.get(url);
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.manage().window().fullscreen();
-
-
+    }
+    @After
+    public void aftertest() {
+        if (driver != null) {
+            driver.quit();
+        }
     }
     @Test
-    public void testUntitledTestCase() throws InterruptedException {
+    public void testUntitledTest() throws InterruptedException {
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -76,10 +85,6 @@ public class Demoqa {
         js.executeScript("arguments[0].value = '';", element);
         js.executeScript("arguments[0].value = '11 July 1982';", element);
         Thread.sleep(3000);
-
-//        System.out.println("Subjects");
-//        driver.findElement(By.id("subjectsInput")).clear();
-//        driver.findElement(By.id("subjectsInput")).sendKeys("name");
 
         System.out.println("Scroll down");
         element = driver.findElement(By.id("submit"));
@@ -114,33 +119,11 @@ public class Demoqa {
         driver.findElement(By.xpath("//*[@id='submit']"));
         js.executeScript("arguments[0].click();", element);
 
-//        driver.findElement(By.xpath("//*[@id='example-modal-sizes-title-lg']")).getText(),("Thanks for submitting the form");
-//        String actualText = element.getText();
-//        String expectedText = "Thanks for submitting the form";
-//        expectedText = expectedText.trim();
         assertEquals(driver.findElement(By.xpath("//*[@id='example-modal-sizes-title-lg']")).getText(),("Thanks for submitting the form"));
         Thread.sleep(3000);
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        WebElement icon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#closeLargeModal")));
-//        assertTrue(icon.isDisplayed());
-//        WebElement icon = driver.findElement(By.cssSelector("#closeLargeModal"));
-//        assertTrue(icon.isDisplayed());
-//           WebElement closeModal = driver.findElement(By.cssSelector("#closeLargeModal"));
-//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", closeModal);
-//        driver.findElement(By.cssSelector("#closeLargeModal")).click();
-
-//        ((JavascriptExecutor) driver).executeScript("document.getElementById('closeLargeModal').style.display = 'none';");
-//        closeModal.click();
 
         System.out.println("Test passed");
-
-    }
-
-    @AfterEach
-    public void aftertest() {
-        if (driver != null) {
-            driver.quit();
-        }
+        driver.quit();
     }
 }
 

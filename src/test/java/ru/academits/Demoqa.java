@@ -33,7 +33,7 @@ public class Demoqa {
     public static WebDriver driver = null;
 
     @Before
-    public void beforetest()  {
+    public void beforeTest() {
 
         String browser = System.getProperty("browser");
 
@@ -52,12 +52,14 @@ public class Demoqa {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.manage().window().fullscreen();
     }
+
     @After
-    public void aftertest() {
+    public void afterTest() {
         if (driver != null) {
             driver.quit();
         }
     }
+
     @Test
     public void testUntitledTest() throws InterruptedException {
 
@@ -81,13 +83,18 @@ public class Demoqa {
 
         System.out.println("Date of Birth");
         Thread.sleep(3000);
-        WebElement element = driver.findElement(By.xpath("//*[@id='dateOfBirthInput']"));
-        js.executeScript("arguments[0].value = '';", element);
-        js.executeScript("arguments[0].value = '11 July 1982';", element);
+        WebElement dateOfBirthInput = driver.findElement(By.xpath("//*[@id='dateOfBirthInput']"));
+        dateOfBirthInput.click();
+        WebElement SelectMonth = driver.findElement(By.xpath("//*[@id='dateOfBirth']/descendant::select[1]/option[3]"));
+        SelectMonth.click();
+        WebElement SelectYear = driver.findElement(By.xpath("//*[@id='dateOfBirth']/descendant::select[2]/option[79]"));
+        SelectYear.click();
+        WebElement SelectDate = driver.findElement(By.xpath("//*[@id='dateOfBirth']/descendant::div[29]"));
+        SelectDate.click();
         Thread.sleep(3000);
 
         System.out.println("Scroll down");
-        element = driver.findElement(By.id("submit"));
+        WebElement element = driver.findElement(By.id("submit"));
         js.executeScript("arguments[0].scrollIntoView(true);", element);
 
         System.out.println("Hobbies");
@@ -118,12 +125,22 @@ public class Demoqa {
         js.executeScript("document.body.style.zoom='50%'");
         driver.findElement(By.xpath("//*[@id='submit']"));
         js.executeScript("arguments[0].click();", element);
-
-        assertEquals(driver.findElement(By.xpath("//*[@id='example-modal-sizes-title-lg']")).getText(),("Thanks for submitting the form"));
         Thread.sleep(3000);
 
+        assertEquals(driver.findElement(By.xpath("//*[@id='example-modal-sizes-title-lg']")).getText().trim(), ("Thanks for submitting the form"));
+        Thread.sleep(3000);
+
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[1]/td[2]")).getText().trim(), "Aleksandr Koroley");
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[2]/td[2]")).getText(), "Alexandr_Koroley@example.com");
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[3]/td[2]")).getText(), "Male");
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[4]/td[2]")).getText(), "8913999000");
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[5]/td[2]")).getText(), "02 March,1978");
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[7]/td[2]")).getText(), "Sports");
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[8]/td[2]")).getText(), "FotoForDemoqa.jpeg");
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[9]/td[2]")).getText().trim(), "Moscow");
+        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[10]/td[2]")).getText(), "Haryana Karnal");
+
         System.out.println("Test passed");
-        driver.quit();
     }
 }
 

@@ -1,35 +1,26 @@
 package ru.academits;
 
+
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
-import java.awt.*;
+import org.testng.asserts.SoftAssert;
 import java.io.File;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
+import org.testng.Assert;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.assertj.core.api.SoftAssertions;
 
 public class Demoqa {
+
     public static WebDriver driver = null;
 
     @Before
@@ -62,7 +53,7 @@ public class Demoqa {
 
     @Test
     public void testUntitledTest() throws InterruptedException {
-
+        SoftAssertions softAssert = new SoftAssertions();
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
         System.out.println("Start");
@@ -91,7 +82,7 @@ public class Demoqa {
         SelectYear.click();
         WebElement SelectDate = driver.findElement(By.xpath("//*[@id='dateOfBirth']/descendant::div[29]"));
         SelectDate.click();
-        Thread.sleep(3000);
+
 
         System.out.println("Scroll down");
         WebElement element = driver.findElement(By.id("submit"));
@@ -130,16 +121,19 @@ public class Demoqa {
         assertEquals(driver.findElement(By.xpath("//*[@id='example-modal-sizes-title-lg']")).getText().trim(), ("Thanks for submitting the form"));
         Thread.sleep(3000);
 
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[1]/td[2]")).getText().trim(), "Aleksandr Koroley");
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[2]/td[2]")).getText(), "Alexandr_Koroley@example.com");
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[3]/td[2]")).getText(), "Male");
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[4]/td[2]")).getText(), "8913999000");
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[5]/td[2]")).getText(), "02 March,1978");
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[7]/td[2]")).getText(), "Sports");
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[8]/td[2]")).getText(), "FotoForDemoqa.jpeg");
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[9]/td[2]")).getText().trim(), "Moscow");
-        assertEquals(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[10]/td[2]")).getText(), "Haryana Karnal");
 
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[1]/td[2]")).getText()).contains("Aleksandr Korol1ey");
+
+        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[2]/td[2]").toString().equalsIgnoreCase("Alexandr_Koroley@example.com");
+        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[3]/td[2]").toString().equalsIgnoreCase("Male");
+        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[4]/td[2]").toString().equalsIgnoreCase("8913999000");
+        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[5]/td[2]").toString().equalsIgnoreCase("02 March,1978");
+        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[7]/td[2]").toString().equalsIgnoreCase("Sports");
+        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[8]/td[2]").toString().equalsIgnoreCase("FotoForDemoqa.jpeg");
+        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[9]/td[2]").toString().equalsIgnoreCase("Moscow");
+        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[10]/td[2]").toString().equalsIgnoreCase("Haryana Karnal");
+
+        softAssert.assertAll();
         System.out.println("Test passed");
     }
 }

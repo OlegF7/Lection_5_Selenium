@@ -13,10 +13,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.asserts.SoftAssert;
+
 import java.io.File;
 import java.time.Duration;
+
 import org.testng.Assert;
+
 import static org.junit.Assert.assertEquals;
+
 import org.assertj.core.api.SoftAssertions;
 
 public class Demoqa {
@@ -121,18 +125,15 @@ public class Demoqa {
         assertEquals(driver.findElement(By.xpath("//*[@id='example-modal-sizes-title-lg']")).getText().trim(), ("Thanks for submitting the form"));
         Thread.sleep(3000);
 
-
-        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[1]/td[2]")).getText()).contains("Aleksandr Korol1ey");
-
-        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[2]/td[2]").toString().equalsIgnoreCase("Alexandr_Koroley@example.com");
-        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[3]/td[2]").toString().equalsIgnoreCase("Male");
-        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[4]/td[2]").toString().equalsIgnoreCase("8913999000");
-        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[5]/td[2]").toString().equalsIgnoreCase("02 March,1978");
-        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[7]/td[2]").toString().equalsIgnoreCase("Sports");
-        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[8]/td[2]").toString().equalsIgnoreCase("FotoForDemoqa.jpeg");
-        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[9]/td[2]").toString().equalsIgnoreCase("Moscow");
-        softAssert.assertThat("//*[@class='table-responsive']/descendant::table/tbody/tr[10]/td[2]").toString().equalsIgnoreCase("Haryana Karnal");
-
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[1]/td[2]")).getText()).isEqualTo("Aleksandr Koroley");
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[2]/td[2]")).getText()).isEqualTo("Alexandr_Koroley@example.com");
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[3]/td[2]")).getText()).isEqualTo("Male");
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[4]/td[2]")).getText()).isEqualTo("8913999000");
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[5]/td[2]")).getText()).isEqualTo("02 March,1978");
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[7]/td[2]")).getText()).isEqualTo("Sports");
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[8]/td[2]")).getText()).isEqualTo("FotoForDemoqa.jpeg");
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[9]/td[2]")).getText()).isEqualTo("Moscow");
+        softAssert.assertThat(driver.findElement(By.xpath("//*[@class='table-responsive']/descendant::table/tbody/tr[10]/td[2]")).getText()).isEqualTo("Haryana Karnal");
         softAssert.assertAll();
         System.out.println("Test passed");
     }
